@@ -82,7 +82,6 @@ class FortifyServiceProvider extends ServiceProvider
                 return null;
             }
 
-            // login_type を判定（無ければ user 扱い）
             $loginType = $request->input('login_type', 'user');
 
             if ($loginType === 'admin') {
@@ -91,7 +90,6 @@ class FortifyServiceProvider extends ServiceProvider
                     return null;
                 }
             } else {
-                // 一般ログイン：管理者は弾く
                 if ((int)$user->role === (int)User::ROLE_ADMIN) {
                     return null;
                 }

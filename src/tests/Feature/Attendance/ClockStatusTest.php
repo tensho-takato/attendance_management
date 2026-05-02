@@ -16,10 +16,6 @@ class ClockStatusTest extends TestCase
     /**
      * 【ID4】日時取得機能
      * 仕様書：「現在の日時」が画面に表示される
-     * - 日付（例）YYYY年M月D日(ddd)
-     * - 時刻（例）HH:mm
-     *
-     * ※表示形式は AttendanceController@index のUIに合わせる
      */
     /** @test */
     public function datetime_is_displayed_in_ui_format(): void
@@ -29,26 +25,20 @@ class ClockStatusTest extends TestCase
             'role' => 0,
         ]);
 
-        // テストが日付ブレしないよう固定
         $fixed = Carbon::create(2026, 5, 2, 9, 15, 0);
         Carbon::setTestNow($fixed);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
-
-        // ✅ ここはUI表示に合わせて
-        $expectedDate = $fixed->isoFormat('YYYY年M月D日(ddd)');
-        $expectedTime = $fixed->format('H:i');
-
-        $response->assertSee($expectedDate);
-        $response->assertSee($expectedTime);
+        $response->assertSee($fixed->isoFormat('YYYY年M月D日(ddd)'));
+        $response->assertSee($fixed->format('H:i'));
 
         Carbon::setTestNow();
     }
 
     /**
      * 【ID5】ステータス確認（勤務外）
-     * 仕様書：勤怠が無い日 → 「勤務外」
      */
     /** @test */
     public function status_is_working_outside_when_no_attendance_today(): void
@@ -61,6 +51,7 @@ class ClockStatusTest extends TestCase
         Carbon::setTestNow(Carbon::create(2026, 5, 2, 9, 0, 0));
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('勤務外');
 
@@ -69,7 +60,6 @@ class ClockStatusTest extends TestCase
 
     /**
      * 【ID5】ステータス確認（出勤中）
-     * 仕様書：出勤済・退勤未 → 「出勤中」
      */
     /** @test */
     public function status_is_working_when_clocked_in_and_not_clocked_out(): void
@@ -91,6 +81,7 @@ class ClockStatusTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('出勤中');
 
@@ -99,7 +90,6 @@ class ClockStatusTest extends TestCase
 
     /**
      * 【ID5】ステータス確認（休憩中）
-     * 仕様書：休憩開始済・休憩終了未 → 「休憩中」
      */
     /** @test */
     public function status_is_on_break_when_break_started_and_not_ended(): void
@@ -120,7 +110,6 @@ class ClockStatusTest extends TestCase
             'note' => null,
         ]);
 
-        // ✅ あなたのモデル名は AttendanceBreak
         AttendanceBreak::create([
             'attendance_id' => $attendance->id,
             'break_start_at' => $today->copy()->setTime(10, 0, 0),
@@ -128,6 +117,7 @@ class ClockStatusTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('休憩中');
 
@@ -136,7 +126,6 @@ class ClockStatusTest extends TestCase
 
     /**
      * 【ID5】ステータス確認（退勤済）
-     * 仕様書：退勤済 → 「退勤済」
      */
     /** @test */
     public function status_is_clocked_out_when_clocked_out(): void
@@ -158,15 +147,10 @@ class ClockStatusTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get('/attendance');
+
         $response->assertStatus(200);
         $response->assertSee('退勤済');
 
         Carbon::setTestNow();
     }
 }
-
-/*
-【このファイルのテスト実行コマンド】
-php artisan config:clear
-php artisan test tests/Feature/Attendance/ClockStatusTest.php
-*/

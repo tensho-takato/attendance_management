@@ -16,20 +16,17 @@ class AttendanceController extends Controller
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
 
-        // ?date=YYYY-MM-DD（未指定なら今日）
         $date = $request->query('date', now()->toDateString());
         $currentDate = Carbon::parse($date);
 
         $prevDate = $currentDate->copy()->subDay();
         $nextDate = $currentDate->copy()->addDay();
 
-        // その日の勤怠（休憩も一緒に）
         $attendances = Attendance::with('breaks')
             ->whereDate('work_date', $currentDate->toDateString())
             ->get()
             ->keyBy('user_id');
 
-        // 一般ユーザーのみ
         $users = User::where('role', User::ROLE_USER)
             ->orderBy('name')
             ->get();
@@ -48,7 +45,6 @@ class AttendanceController extends Controller
                 ];
             }
 
-            // 休憩合計
             $breakSeconds = 0;
             foreach ($a->breaks as $b) {
                 if ($b->break_start_at && $b->break_end_at) {
@@ -57,7 +53,6 @@ class AttendanceController extends Controller
                 }
             }
 
-            // 勤務時間
             $workSeconds = 0;
             if ($a->clock_in_at && $a->clock_out_at) {
                 $workSeconds = Carbon::parse($a->clock_out_at)
@@ -110,7 +105,6 @@ class AttendanceController extends Controller
         $break2Start = ($break2 && $break2->break_start_at) ? Carbon::parse($break2->break_start_at)->format('H:i') : '';
         $break2End   = ($break2 && $break2->break_end_at)   ? Carbon::parse($break2->break_end_at)->format('H:i') : '';
 
-        // ✅ Blade の work_year / work_md 初期値用
         $d = Carbon::parse($attendance->work_date);
 
         return view('admin.attendance_show', compact(
@@ -132,12 +126,10 @@ class AttendanceController extends Controller
 
         $attendance = Attendance::with('breaks')->findOrFail($id);
 
-        // ✅ Request側で work_year/work_md → work_date を合成済み
-        $date = $request->work_date; // YYYY-MM-DD
+        $date = $request->work_date;
 
         DB::transaction(function () use ($request, $attendance, $date) {
 
-            // 勤怠を更新（直接反映）
             $attendance->update([
                 'work_date'    => $date,
                 'clock_in_at'  => Carbon::parse("$date {$request->clock_in_at}"),
@@ -145,7 +137,6 @@ class AttendanceController extends Controller
                 'note'         => $request->note,
             ]);
 
-            // 休憩は入れ直し
             $attendance->breaks()->delete();
 
             foreach ($request->input('breaks', []) as $b) {

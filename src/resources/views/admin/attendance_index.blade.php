@@ -9,7 +9,6 @@
 
     <h2 class="attendance-list__title">{{ $currentDate->format('Y年n月j日') }}の勤怠</h2>
 
-    {{-- 日付ナビ --}}
     <div class="attendance-list__date-nav">
         <a class="attendance-list__date-nav-link"
            href="{{ route('admin.attendance.list', ['date' => $prevDate->toDateString()]) }}">
@@ -51,7 +50,6 @@
                     @if($row['attendance_id'])
                         <a href="{{ route('admin.attendance.show', ['id' => $row['attendance_id']]) }}">詳細</a>
                     @else
-                        {{-- 勤怠が無いユーザーは詳細へ行けないので空白 --}}
                         <span></span>
                     @endif
                 </td>

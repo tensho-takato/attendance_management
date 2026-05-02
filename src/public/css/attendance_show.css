@@ -1,11 +1,7 @@
-/* public/css/attendance_show.css */
-
-/* 背景 */
 body {
   background: #f2f2f2;
 }
 
-/* 画面全体 */
 .request {
   max-width: 900px;
   margin: 0 auto;
@@ -13,7 +9,6 @@ body {
   box-sizing: border-box;
 }
 
-/* タイトル（左に縦棒） */
 .request__title {
   font-size: 30px;
   font-weight: 700;
@@ -32,23 +27,18 @@ body {
   background: #111;
 }
 
-/* ====== 白いカード ====== */
 .request form {
   max-width: 100%;
   margin: 0 auto;
 }
 
-/*
-  ✅ 右側にエラー領域を確保するため、
-  row自体に「右側余白」を作る（ここが被り解消の本体）
-*/
 .request .row {
   display: grid;
   grid-template-columns: 220px 1fr;
   align-items: center;
   column-gap: 24px;
   padding: 22px 28px;
-  padding-right: 260px;            /* ★右側にエラー表示スペースを確保 */
+  padding-right: 260px;
   background: #fff;
   border-bottom: 2px solid #e1e1e1;
   box-sizing: border-box;
@@ -66,7 +56,6 @@ body {
   border-bottom: none;
 }
 
-/* 左ラベル */
 .request .label {
   color: #737373;
   font-size: 16px;
@@ -76,7 +65,6 @@ body {
   box-sizing: border-box;
 }
 
-/* 右側 */
 .request .field {
   display: flex;
   align-items: center;
@@ -85,7 +73,6 @@ body {
   box-sizing: border-box;
 }
 
-/* 共通 input / textarea */
 .request input[type="text"],
 .request input[type="time"],
 .request textarea {
@@ -97,7 +84,6 @@ body {
   box-sizing: border-box;
 }
 
-/* ====== readonly は枠なし ====== */
 .request input[readonly] {
   border: none;
   background: transparent;
@@ -106,7 +92,6 @@ body {
   box-sizing: border-box;
 }
 
-/* 名前/日付表示（枠なし） */
 .request input[readonly][type="text"] {
   width: 260px;
   text-align: left;
@@ -116,7 +101,6 @@ body {
   padding: 0px 0px 0px 11px;
 }
 
-/* 時刻フィールド（left） */
 .request input[type="time"] {
   width: 96px;
   height: 36px;
@@ -126,7 +110,6 @@ body {
   padding: 8px 10px;
 }
 
-/* ===== 時計アイコンを消す ===== */
 .request input[type="time"]::-webkit-calendar-picker-indicator {
   display: none;
   -webkit-appearance: none;
@@ -141,7 +124,6 @@ body {
   -moz-appearance: textfield;
 }
 
-/* 備考 */
 .request textarea {
   width: 360px;
   height: 84px;
@@ -150,18 +132,12 @@ body {
   display: block;
 }
 
-/* エラー（共通） */
 .form-error {
   color: #d00;
   font-size: 13px;
   font-weight: 700;
 }
 
-/*
-  ✅ 右側に固定しつつ「折り返し」
-  - 右側枠内で折り返す
-  - 入力と被らない（rowが右余白を持っているので）
-*/
 .request .row .form-error {
   position: absolute;
   right: 5px;
@@ -169,49 +145,39 @@ body {
   transform: translateY(-50%);
   margin: 0px;
 
-  width: 220px;                 /* ★右側エラー枠の幅（必要なら増減OK） */
-  white-space: normal;          /* ★折り返しON */
-  word-break: break-word;       /* ★日本語も強制折り返し */
+  width: 220px;
+  white-space: normal;
+  word-break: break-word;
   line-height: 18px;
   text-align: left;
   pointer-events: none;
 }
 
-/* ✅ 複数行になったとき、上下中央のズレが気になるなら少し上寄せ */
 .request .row .form-error.form-error--top {
   top: 44%;
 }
 
-/* ==========================
-   幅を詰める（年/月日、出勤/休憩）
-   =========================== */
-
-/* 3カラム固定：左 / 中央(〜) / 右 */
 .request .field--split {
   display: inline-grid;
-  grid-template-columns: 100px 160px 100px; /* 左右を寄せつつ中央確保 */
+  grid-template-columns: 100px 160px 100px;
   align-items: center;
   column-gap: 0px;
 }
 
-/* 〜 は中央カラムのど真ん中 */
 .request .field--split .tilde {
   justify-self: center;
   font-weight: 700;
   color: #111;
 }
 
-/* 日付行（年 / 月日）は距離を狭める */
 .request .row--date .field--split {
   grid-template-columns: 120px 48px 120px;
 }
 
-/* 日付の中央は“見えないスペーサー” */
 .request .row--date .field--split .tilde {
   opacity: 0;
 }
 
-/* 日付表示（年・月日） */
 .request .row--date .date-year,
 .request .row--date .date-md {
   font-size: 16px;
@@ -234,7 +200,6 @@ body {
   column-gap: 0px;
 }
 
-/* ===== ボタン ===== */
 .actions {
   max-width: 900px;
   margin: 28px auto 0;
@@ -266,17 +231,15 @@ body {
   margin: 12px 0 0;
 }
 
-/* ===== タブレット（1行固定） ===== */
 @media (max-width: 850px) {
   .request {
     padding-top: 56px;
   }
 
-  /* タブレットではエラー枠が狭くなるので row右余白も少し減らす */
   .request .row {
     grid-template-columns: 180px 1fr;
     padding: 18px 18px;
-    padding-right: 220px;       /* ★右エラー領域も確保 */
+    padding-right: 220px;
     column-gap: 18px;
   }
 
@@ -315,6 +278,6 @@ body {
 
   .request .row .form-error {
     right: 5px;
-    width: 190px;               /* ★タブレットは少し狭める */
+    width: 190px;
   }
 }

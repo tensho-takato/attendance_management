@@ -12,7 +12,6 @@
   <form method="POST" action="{{ route('admin.attendance.update', ['id' => $attendance->id]) }}">
     @csrf
 
-    {{-- 名前（編集不可） --}}
     <div class="row">
       <div class="label">名前</div>
       <div class="field">
@@ -21,8 +20,8 @@
     </div>
 
     @php
-    $d = \Carbon\Carbon::parse(old('work_date', $attendance->work_date));
-@endphp
+      $d = \Carbon\Carbon::parse(old('work_date', $attendance->work_date));
+    @endphp
 
 <div class="row row--date">
   <div class="label">日付</div>
@@ -50,7 +49,6 @@
   @enderror
 </div>
 
-    {{-- 出勤・退勤 --}}
     <div class="row">
       <div class="label">出勤・退勤</div>
       <div class="field time-range">
@@ -66,7 +64,6 @@
       @endif
     </div>
 
-    {{-- 休憩 --}}
     <div class="row">
       <div class="label">休憩</div>
       <div class="field time-range">
@@ -91,7 +88,6 @@
       @enderror
     </div>
 
-    {{-- 備考 --}}
     <div class="row">
       <div class="label">備考</div>
       <div class="field">

@@ -29,7 +29,7 @@ class StampCorrectionRequestController extends Controller
             $scr = StampCorrectionRequest::create([
                 'attendance_id' => $attendance->id,
                 'user_id'       => auth()->id(),
-                'status'        => 0, // 承認待ち
+                'status'        => 0,
 
                 'requested_work_date' => $date,
                 'requested_clock_in_at'  => Carbon::parse("$date {$request->clock_in_at}"),
@@ -59,7 +59,7 @@ class StampCorrectionRequestController extends Controller
 
     public function list(Request $request)
     {
-        $tab = $request->query('tab', 'pending'); // pending / approved
+        $tab = $request->query('tab', 'pending');
         $status = $tab === 'approved' ? 1 : 0;
 
         $requests = StampCorrectionRequest::with('user')

@@ -8,7 +8,6 @@
 <main class="request">
     <h2 class="request__title">勤怠詳細</h2>
 
-    {{-- 名前 --}}
     <div class="row">
         <div class="label">名前</div>
         <div class="field">
@@ -16,21 +15,19 @@
         </div>
     </div>
 
-    {{-- 日付 --}}
     @php
-  $d = \Carbon\Carbon::parse($requestItem->requested_work_date);
-@endphp
+        $d = \Carbon\Carbon::parse($requestItem->requested_work_date);
+    @endphp
 
-<div class="row row--date">
-  <div class="label">日付</div>
-  <div class="field time-range">
-    <input type="text" value="{{ $d->format('Y') }}年" readonly>
-    <span class="tilde" style="opacity:0;">〜</span>
-    <input type="text" value="{{ $d->format('n月j日') }}" readonly>
-  </div>
-</div>
+    <div class="row row--date">
+        <div class="label">日付</div>
+        <div class="field time-range">
+            <input type="text" value="{{ $d->format('Y') }}年" readonly>
+            <span class="tilde" style="opacity:0;">〜</span>
+            <input type="text" value="{{ $d->format('n月j日') }}" readonly>
+        </div>
+    </div>
 
-    {{-- 出勤・退勤 --}}
     <div class="row">
         <div class="label">出勤・退勤</div>
         <div class="field time-range">
@@ -40,7 +37,6 @@
         </div>
     </div>
 
-    {{-- 休憩 --}}
     <div class="row">
         <div class="label">休憩</div>
         <div class="field time-range">
@@ -50,7 +46,6 @@
         </div>
     </div>
 
-    {{-- 休憩2 --}}
     <div class="row">
         <div class="label">休憩2</div>
         <div class="field time-range">
@@ -60,7 +55,6 @@
         </div>
     </div>
 
-    {{-- 備考 --}}
     <div class="row">
         <div class="label">備考</div>
         <div class="field">

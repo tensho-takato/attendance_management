@@ -17,7 +17,6 @@
         <nav>
             @auth
                 @if(auth()->user()->isAdmin())
-                    {{-- 管理者ヘッダー（あとで管理者画面を作るときここを育てる） --}}
                     <ul class="header-nav">
                         <li><a href="{{ route('admin.attendance.list') }}">勤怠一覧</a></li>
                         <li><a href="{{ route('admin.staff.list') }}">スタッフ一覧</a></li>
@@ -31,7 +30,6 @@
                         </li>
                     </ul>
                 @else
-                    {{-- 一般ユーザーヘッダー --}}
                     <ul class="header-nav">
                         <li><a href="{{ route('attendance.index') }}">勤怠</a></li>
                         <li><a href="{{ route('attendance.list') }}">勤怠一覧</a></li>

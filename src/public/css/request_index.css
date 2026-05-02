@@ -120,10 +120,9 @@ body {
     }
 
     .request-list table {
-        width: 700px; /* 文字が潰れない最低幅 */
+        width: 700px;
     }
 
-  /* 画面が狭い場合は横スクロールできるように */
     .request-list {
         overflow-x: auto;
     }

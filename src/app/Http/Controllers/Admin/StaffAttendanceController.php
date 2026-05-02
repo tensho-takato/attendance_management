@@ -15,27 +15,24 @@ class StaffAttendanceController extends Controller
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
 
-        $month = $request->query('month', now()->format('Y-m')); // YYYY-MM
+        $month = $request->query('month', now()->format('Y-m'));
         $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $end   = (clone $start)->endOfMonth();
 
         $prevMonth = (clone $start)->subMonth()->format('Y-m');
         $nextMonth = (clone $start)->addMonth()->format('Y-m');
 
-        // 対象月の勤怠 + 休憩
         $attendances = Attendance::with('breaks')
             ->where('user_id', $user->id)
             ->whereBetween('work_date', [$start->toDateString(), $end->toDateString()])
             ->get()
             ->keyBy('work_date');
 
-        // その月の全日付（空白行を作るため）
         $dates = [];
         for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
             $dates[] = $d->copy();
         }
 
-        // 表示行を作る
         $rows = collect($dates)->map(function (Carbon $d) use ($attendances) {
             $workDate = $d->toDateString();
             $a = $attendances->get($workDate);
@@ -104,8 +101,6 @@ class StaffAttendanceController extends Controller
         return response()->streamDownload(function () use ($start, $end, $attendances) {
             $out = fopen('php://output', 'w');
 
-            // Excelで文字化けしにくいように（必要なら）
-            // fputs($out, "\xEF\xBB\xBF");
 
             fputcsv($out, ['日付', '出勤', '退勤', '休憩', '合計']);
 

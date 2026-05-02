@@ -84,7 +84,6 @@ body {
     color: #111;
 }
 
-/* readonly表示（申請内容なので全部表示用） */
 .request input[type="text"],
 .request textarea {
     border: 1px solid #e1e1e1;
@@ -104,7 +103,6 @@ body {
     box-sizing: border-box;
 }
 
-/* 表示文字の開始位置を揃える */
 .request input[readonly][type="text"] {
     width: 260px;
     text-align: left;
@@ -114,7 +112,6 @@ body {
     padding-left: 11px;
 }
 
-/* 備考 */
 .request textarea {
     width: 360px;
     height: 84px;
@@ -129,7 +126,6 @@ body {
     padding: 0px 0px 0px 11px;
 }
 
-/* actions */
 .actions {
     max-width: 900px;
     margin: 28px auto 0;
@@ -139,7 +135,6 @@ body {
     box-sizing: border-box;
 }
 
-/* ボタン */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -155,7 +150,6 @@ body {
     cursor: pointer;
 }
 
-/* 承認済みボタン（薄いグレー） */
 .btn--approved {
     background: #e1e1e1;
     color: #737373;

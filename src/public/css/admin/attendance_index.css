@@ -110,7 +110,6 @@ body {
     font-weight: 700;
 }
 
-/* タブレット */
 @media (max-width: 850px) {
     .attendance-list:has(.attendance-list__date-nav) {
         max-width: 680px;

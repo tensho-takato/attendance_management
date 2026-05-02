@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
-    // スタッフ一覧（管理者）
     public function index()
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -22,7 +21,6 @@ class StaffController extends Controller
         return view('admin.staff_index', compact('users'));
     }
 
-    // スタッフ別：月次勤怠一覧（管理者）
     public function monthly(Request $request, User $user)
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -59,7 +57,6 @@ class StaffController extends Controller
         ));
     }
 
-    // CSV出力（管理者）
     public function csv(Request $request, User $user)
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -81,7 +78,6 @@ class StaffController extends Controller
         return response()->streamDownload(function () use ($start, $end, $attendances) {
             $out = fopen('php://output', 'w');
 
-            // Excel向けBOM（UTF-8の文字化け回避）
             fwrite($out, "\xEF\xBB\xBF");
 
             fputcsv($out, ['日付', '出勤', '退勤', '休憩', '合計']);

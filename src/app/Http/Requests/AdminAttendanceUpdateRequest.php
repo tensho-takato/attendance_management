@@ -54,20 +54,20 @@ class AdminAttendanceUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'work_year.required' => '日付が不正です。',
-            'work_year.digits'   => '日付が不正です。',
-            'work_md.required'   => '日付が不正です。',
-            'work_md.regex'      => '日付が不正です。',
-            'work_date.required' => '日付が不正です。',
-            'work_date.date'     => '日付が不正です。',
+            'work_year.required' => '日付が不正です',
+            'work_year.digits'   => '日付が不正です',
+            'work_md.required'   => '日付が不正です',
+            'work_md.regex'      => '日付が不正です',
+            'work_date.required' => '日付が不正です',
+            'work_date.date'     => '日付が不正です',
 
-            'clock_in_at.required'     => '出勤時間もしくは退勤時間が不適切な値です。',
-            'clock_in_at.date_format'  => '出勤時間もしくは退勤時間が不適切な値です。',
-            'clock_out_at.required'    => '出勤時間もしくは退勤時間が不適切な値です。',
-            'clock_out_at.date_format' => '出勤時間もしくは退勤時間が不適切な値です。',
-            'clock_out_at.after'       => '出勤時間もしくは退勤時間が不適切な値です。',
+            'clock_in_at.required'     => '出勤時間もしくは退勤時間が不適切な値です',
+            'clock_in_at.date_format'  => '出勤時間もしくは退勤時間が不適切な値です',
+            'clock_out_at.required'    => '出勤時間もしくは退勤時間が不適切な値です',
+            'clock_out_at.date_format' => '出勤時間もしくは退勤時間が不適切な値です',
+            'clock_out_at.after'       => '出勤時間もしくは退勤時間が不適切な値です',
 
-            'note.required' => '備考を記入してください。',
+            'note.required' => '備考を記入してください',
         ];
     }
 
@@ -104,7 +104,7 @@ class AdminAttendanceUpdateRequest extends FormRequest
                 ->exists();
 
             if ($existsOther) {
-                $validator->errors()->add('work_date', 'その日付の勤怠は既に登録されています。');
+                $validator->errors()->add('work_date', 'その日付の勤怠は既に登録されています');
                 return;
             }
 
@@ -118,7 +118,7 @@ class AdminAttendanceUpdateRequest extends FormRequest
                 if (! $bs && ! $be) continue;
 
                 if (! $bs || ! $be) {
-                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です。');
+                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です');
                     continue;
                 }
 
@@ -126,12 +126,12 @@ class AdminAttendanceUpdateRequest extends FormRequest
                 $breakEnd   = Carbon::parse("$date $be");
 
                 if ($breakEnd->lte($breakStart)) {
-                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です。');
+                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です');
                     continue;
                 }
 
                 if ($breakStart->lt($workStart) || $breakEnd->gt($workEnd)) {
-                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です。');
+                    $validator->errors()->add("breaks.$i", '休憩時間が勤務時間外です');
                     continue;
                 }
             }

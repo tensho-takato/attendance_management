@@ -16,7 +16,6 @@ class StampCorrectionRequestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            // ✅ 日付入力（年 + 月日）
             'work_year' => ['required', 'digits:4'],
             'work_md'   => ['required', 'regex:/^\d{1,2}\/\d{1,2}$/'],
 
@@ -34,17 +33,14 @@ class StampCorrectionRequestStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            // 出勤・退勤（仕様メッセージ）
             'clock_in_at.required'     => '出勤時間もしくは退勤時間が不適切な値です',
             'clock_in_at.date_format'  => '出勤時間もしくは退勤時間が不適切な値です',
             'clock_out_at.required'    => '出勤時間もしくは退勤時間が不適切な値です',
             'clock_out_at.date_format' => '出勤時間もしくは退勤時間が不適切な値です',
             'clock_out_at.after'       => '出勤時間もしくは退勤時間が不適切な値です',
 
-            // 備考
             'note.required'            => '備考を記入してください',
 
-            // 日付（新仕様：文言は必要なら変えてOK）
             'work_year.required' => '日付が不正です',
             'work_year.digits'   => '日付が不正です',
             'work_md.required'   => '日付が不正です',
@@ -56,19 +52,16 @@ class StampCorrectionRequestStoreRequest extends FormRequest
     {
         $validator->after(function ($validator) {
 
-            // まず attendance を確実に取る
-            $attendance = $this->route('attendance'); // ルートモデルバインド
+            $attendance = $this->route('attendance');
             if (! $attendance) {
                 $validator->errors()->add('work_date', '日付が不正です');
                 return;
             }
 
-            // ✅ 年/月日がNGならここで終わり
             if ($validator->errors()->has('work_year') || $validator->errors()->has('work_md')) {
                 return;
             }
 
-            // ✅ 年 + 月日 → work_date(YYYY-MM-DD) を合成して request に入れる
             try {
                 $year = (int) $this->input('work_year');
                 [$m, $d] = array_map('intval', explode('/', $this->input('work_md')));
@@ -85,12 +78,11 @@ class StampCorrectionRequestStoreRequest extends FormRequest
                 return;
             }
 
-            // ✅ 変更先に既に勤怠があるならエラー（自分の同日別勤怠）
             $workDate = $this->input('work_date');
 
             $exists = Attendance::where('user_id', auth()->id())
                 ->where('work_date', $workDate)
-                ->where('id', '!=', $attendance->id) // 自分自身の勤怠は除外
+                ->where('id', '!=', $attendance->id)
                 ->exists();
 
             if ($exists) {
@@ -98,7 +90,6 @@ class StampCorrectionRequestStoreRequest extends FormRequest
                 return;
             }
 
-            // clock_in/out がNGなら比較できないので終了
             if ($validator->errors()->has('clock_in_at') || $validator->errors()->has('clock_out_at')) {
                 return;
             }

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class StampCorrectionRequestController extends Controller
 {
-    // 申請一覧（管理者）
     public function index(Request $request)
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -27,7 +26,6 @@ class StampCorrectionRequestController extends Controller
         return view('admin.request_index', compact('requests', 'tab'));
     }
 
-    // 申請詳細（承認画面）
     public function show($id)
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -51,7 +49,6 @@ class StampCorrectionRequestController extends Controller
             return view('admin.request_edit_approval', compact('requestItem', 'breakRows'));
     }
 
-    // 承認（勤怠へ反映）
     public function approve($id)
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
@@ -59,7 +56,6 @@ class StampCorrectionRequestController extends Controller
         $requestItem = StampCorrectionRequest::with(['attendance', 'breaks'])
             ->findOrFail($id);
 
-        // すでに承認済みなら何もしない（多重クリック対策）
         if ((int)$requestItem->status === 1) {
             return redirect()->route('admin.scr.show', ['id' => $requestItem->id]);
         }
@@ -67,7 +63,6 @@ class StampCorrectionRequestController extends Controller
         DB::transaction(function () use ($requestItem) {
             $attendance = Attendance::lockForUpdate()->findOrFail($requestItem->attendance_id);
 
-            // 勤怠を申請内容で更新
             $attendance->update([
                 'work_date'    => $requestItem->requested_work_date,
                 'clock_in_at'  => $requestItem->requested_clock_in_at,
@@ -75,11 +70,9 @@ class StampCorrectionRequestController extends Controller
                 'note'         => $requestItem->note,
             ]);
 
-            // 休憩は「申請の内容」に置き換える
             $attendance->breaks()->delete();
 
             foreach ($requestItem->breaks as $b) {
-                // 両方空は作らない（念のため）
                 if (!$b->break_start_at && !$b->break_end_at) continue;
 
                 $attendance->breaks()->create([
@@ -88,7 +81,6 @@ class StampCorrectionRequestController extends Controller
                 ]);
             }
 
-            // 申請を承認済みに
             $requestItem->update([
                 'status'      => 1,
                 'approved_by' => auth()->id(),

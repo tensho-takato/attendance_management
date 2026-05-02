@@ -10,11 +10,11 @@
 
     <div class="request-tabs">
         <a href="{{ route('admin.scr.list', ['tab' => 'pending']) }}"
-           class="{{ ($tab ?? 'pending') === 'pending' ? 'is-active' : '' }}">
+            class="{{ ($tab ?? 'pending') === 'pending' ? 'is-active' : '' }}">
             承認待ち
         </a>
         <a href="{{ route('admin.scr.list', ['tab' => 'approved']) }}"
-           class="{{ ($tab ?? 'pending') === 'approved' ? 'is-active' : '' }}">
+            class="{{ ($tab ?? 'pending') === 'approved' ? 'is-active' : '' }}">
             承認済み
         </a>
     </div>

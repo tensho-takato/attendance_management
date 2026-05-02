@@ -22,19 +22,18 @@ class AttendanceController extends Controller
             ->where('work_date', $today)
             ->first();
 
-        $dateLabel = now()->isoFormat('YYYY年M月D日(ddd)'); // 例: 2023年6月1日(木)
-        $timeLabel = now()->format('H:i');                 // 例: 08:00
+        $dateLabel = now()->isoFormat('YYYY年M月D日(ddd)');
+        $timeLabel = now()->format('H:i');
 
-        // 状態判定
         if (! $attendance) {
-            $status = 'off'; // 勤務外
+            $status = 'off';
         } elseif ($attendance->clock_out_at) {
-            $status = 'finished'; // 退勤済
+            $status = 'finished';
         } else {
-            $latestBreak = $attendance->breaks->first(); // latest
+            $latestBreak = $attendance->breaks->first();
             $status = ($latestBreak && $latestBreak->break_start_at && ! $latestBreak->break_end_at)
-                ? 'break'    // 休憩中
-                : 'working'; // 出勤中
+                ? 'break'
+                : 'working';
         }
 
         return view('user.attendance_create', compact('status', 'dateLabel', 'timeLabel'));
@@ -46,13 +45,11 @@ class AttendanceController extends Controller
         $today = now()->toDateString();
 
         DB::transaction(function () use ($user, $today) {
-            // 今日の勤怠をロックして取得（多重押下対策）
             $attendance = Attendance::where('user_id', $user->id)
                 ->where('work_date', $today)
                 ->lockForUpdate()
                 ->first();
 
-            // まだ作られていなければ作る
             if (! $attendance) {
                 Attendance::create([
                     'user_id' => $user->id,
@@ -62,12 +59,10 @@ class AttendanceController extends Controller
                 return;
             }
 
-            // 既に出勤済みなら何もしない（1日1回）
             if ($attendance->clock_in_at) {
                 return;
             }
 
-            // レコードはあるがclock_in_atが空のケース（基本ないけど保険）
             $attendance->update([
                 'clock_in_at' => now(),
             ]);
@@ -88,12 +83,10 @@ class AttendanceController extends Controller
             ->where('work_date', $today)
             ->first();
 
-        // 今日の出勤がない / 退勤済みなら休憩入れない
         if (! $attendance || $attendance->clock_out_at) {
             return redirect()->route('attendance.index');
         }
 
-        // 直近休憩が「開始済み・終了なし」= 休憩中なら二重登録しない
         $latestBreak = $attendance->breaks->first();
         if ($latestBreak && $latestBreak->break_start_at && ! $latestBreak->break_end_at) {
             return redirect()->route('attendance.index');
@@ -121,12 +114,10 @@ class AttendanceController extends Controller
             ->where('work_date', $today)
             ->first();
 
-        // 出勤してない / 退勤済みなら何もしない
         if (! $attendance || $attendance->clock_out_at) {
             return redirect()->route('attendance.index');
         }
 
-        // 直近の休憩（開始済み・終了なし）を探す
         $latestBreak = $attendance->breaks->first();
         if (! $latestBreak || ! $latestBreak->break_start_at || $latestBreak->break_end_at) {
             return redirect()->route('attendance.index');
@@ -151,12 +142,10 @@ class AttendanceController extends Controller
             ->where('work_date', $today)
             ->first();
 
-        // 出勤してない / 既に退勤済なら何もしない
         if (! $attendance || $attendance->clock_out_at) {
             return redirect()->route('attendance.index');
         }
 
-        // 休憩中なら退勤させない（休憩戻してから）
         $latestBreak = $attendance->breaks->first();
         if ($latestBreak && $latestBreak->break_start_at && ! $latestBreak->break_end_at) {
             return redirect()->route('attendance.index');
@@ -175,7 +164,7 @@ class AttendanceController extends Controller
     {
         $user = auth()->user();
 
-        $month = $request->query('month', now()->format('Y-m')); // 例: 2026-03
+        $month = $request->query('month', now()->format('Y-m'));
         $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $end   = (clone $start)->endOfMonth();
 
@@ -188,7 +177,7 @@ class AttendanceController extends Controller
 
         $dates = [];
             for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
-        $dates[] = $d->copy(); // ★土日も含める
+        $dates[] = $d->copy();
         }
 
         return view('user.attendance_index', compact('attendances', 'month', 'dates'));
@@ -222,8 +211,8 @@ class AttendanceController extends Controller
 
         $workDate = \Carbon\Carbon::parse($attendance->work_date);
 
-        $workYear = $workDate->format('Y') . '年';     // 2026年
-        $workMonthDay = $workDate->format('n月j日');   // 4月5日
+        $workYear = $workDate->format('Y') . '年';
+        $workMonthDay = $workDate->format('n月j日');
 
         return view('user.attendance_show', compact(
             'attendance',

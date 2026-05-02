@@ -49,7 +49,6 @@ class DemoSeeder extends Seeder
 
         $year = now()->year;
 
-        // ✅ 3月 + 4月
         foreach ([3, 4] as $month) {
             $start = Carbon::create($year, $month, 1)->startOfDay();
             $end   = Carbon::create($year, $month, 1)->endOfMonth()->startOfDay();
