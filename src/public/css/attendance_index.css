@@ -1,0 +1,120 @@
+body {
+    background: #f2f2f2;
+}
+
+.attendance-list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 16px 80px;
+}
+
+.attendance-list__title {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    padding-left: 14px;
+    position: relative;
+}
+
+.attendance-list__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 5px;
+    height: 40px;
+    background: #111;
+}
+
+.attendance-list__month-nav {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.attendance-list__month-nav a {
+    color: #737373;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.attendance-list__month {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #000000;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.attendance-list__month::before {
+    content: "🗓️";
+    font-size: 20px;
+    line-height: 1;
+}
+
+.attendance-list__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+.attendance-list__table thead th {
+    background: #FFFFFF;
+    color: #737373;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 3px solid #E1E1E1;
+}
+
+.attendance-list__table tbody td {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 2px solid #E1E1E1;
+}
+
+.attendance-list__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.attendance-list__table tbody td a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+@media (max-width: 850px) {
+    .attendance-list {
+        max-width: 680px;
+        padding-top: 44px;
+    }
+
+    .attendance-list__month-nav {
+        padding: 12px 12px;
+    }
+
+    .attendance-list__table thead th,
+    .attendance-list__table tbody td {
+        padding: 9px 8px;
+        font-size: 12px;
+    }
+}

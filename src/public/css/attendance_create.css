@@ -1,0 +1,93 @@
+.attendance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 40px 16px;
+}
+
+.attendance_badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 26px;
+    padding: 0 14px;
+    margin-top: 120px;
+    border-radius: 999px;
+
+    background: #C8C8C8;
+    color: #696969;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.attendance_date {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 400;
+    color: #000000;
+}
+
+.attendance_time {
+    margin: 0 0 45px;
+    font-size: 80px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #000000;
+}
+
+.attendance_buttons {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.attendance_primary_button,
+.attendance_secondary_button {
+    width: 220px;
+    height: 75px;
+    border-radius: 20px;
+    font-size: 32px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.attendance_primary_button {
+    background: #000000;
+    color: #FFFFFF;
+}
+
+.attendance_secondary_button {
+    background: #FFFFFF;
+    color: #000000;
+    border: 1px solid #C8C8C8;
+}
+
+.attendance_message {
+    margin: 8px 0 0;
+    font-size: 26px;
+    color: #000000;
+    font-weight: 700;
+}
+
+@media (max-width: 850px) {
+    .attendance_time {
+        font-size: 56px;
+    }
+
+    .attendance_primary_button,
+    .attendance_secondary_button {
+        width: 160px;
+        height: 50px;
+    }
+
+    .attendance_buttons {
+        gap: 16px;
+    }
+}

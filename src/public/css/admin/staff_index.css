@@ -1,0 +1,131 @@
+body {
+    background: #f2f2f2;
+}
+
+.staff-list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 16px 80px;
+    box-sizing: border-box;
+}
+
+.staff-list__title {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    padding-left: 14px;
+    position: relative;
+}
+
+.staff-list__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 5px;
+    height: 40px;
+    background: #111;
+}
+
+.staff-list__table {
+    width: 900px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+
+.staff-list__table thead th {
+    background: #ffffff;
+    color: #737373;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 3px solid #e1e1e1;
+    white-space: nowrap;
+}
+
+.staff-list__table tbody td {
+    color: #737373;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 2px solid #e1e1e1;
+    white-space: nowrap;
+}
+
+.staff-list__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.staff-list__table tbody td a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.staff-list__table tbody td[colspan] {
+    padding: 18px 12px;
+    color: #737373;
+    font-weight: 700;
+}
+
+.staff-list__table thead th:first-child,
+.staff-list__table tbody td:first-child {
+    padding-left: 120px;
+    text-align: left;
+}
+
+.staff-list__table thead th:last-child,
+.staff-list__table tbody td:last-child {
+    padding-right: 80px;
+}
+
+.staff-list__table tbody td:nth-child(2) {
+    letter-spacing: 1.5px;
+}
+
+@media (max-width: 850px) {
+    .staff-list {
+        max-width: 680px;
+        padding-top: 44px;
+    }
+
+    .staff-list__table {
+        width: 100%;
+    }
+
+    .staff-list__table thead th,
+    .staff-list__table tbody td {
+        padding: 9px 8px;
+        font-size: 12px;
+    }
+
+    .staff-list__table thead th:first-child,
+    .staff-list__table tbody td:first-child {
+        padding-left: 18px;
+    }
+
+    .staff-list__table thead th:last-child,
+    .staff-list__table tbody td:last-child {
+        padding-right: 18px;
+        padding-left: 50px;
+        text-align: left;
+    }
+
+    .staff-list__table tbody td:nth-child(2) {
+        letter-spacing: 0.4px;
+    }
+
+    .staff-list__table thead th:first-child,
+    .staff-list__table tbody td:first-child {
+        padding-left: 50px;
+        text-align: left;
+    }
+}

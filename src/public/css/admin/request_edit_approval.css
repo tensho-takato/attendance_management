@@ -1,0 +1,240 @@
+body {
+    background: #f2f2f2;
+}
+
+.request {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 16px 80px;
+    box-sizing: border-box;
+}
+
+.request__title {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 34px;
+    padding-left: 14px;
+    position: relative;
+}
+
+.request__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 5px;
+    height: 40px;
+    background: #111;
+}
+
+.request .row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    column-gap: 24px;
+    padding: 26px 40px;
+    background: #fff;
+    border-bottom: 2px solid #e1e1e1;
+    box-sizing: border-box;
+}
+
+.request .row:first-of-type {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.request .row:last-of-type {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: none;
+    min-height: 130px;
+    align-items: start;
+    padding-top: 34px;
+}
+
+.request .row:first-of-type .field,
+.request .row:last-of-type .field {
+    padding-left: 35px;
+}
+
+.request .row:nth-of-type(6) textarea {
+    margin-left: 35px;
+}
+
+.request .label {
+    color: #737373;
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 12px;
+    box-sizing: border-box;
+}
+
+.request .field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.request input[type="text"],
+.request textarea {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.request input[readonly] {
+    cursor: default;
+}
+
+.request input[readonly][type="text"] {
+    width: auto;
+    min-width: 120px;
+    text-align: left;
+    letter-spacing: 0.02em;
+}
+
+.request .time-range {
+    display: grid;
+    grid-template-columns: 130px 120px 110px;
+    align-items: center;
+    column-gap: 0;
+}
+
+.request .time-range span {
+    justify-self: center;
+    font-weight: 700;
+    color: #111;
+}
+
+.request .row .time-range input[type="text"] {
+    width: 110px;
+    text-align: center;
+}
+
+.request .row--date .field--split {
+    display: inline-grid;
+    grid-template-columns: 110px 110px;
+    align-items: center;
+    column-gap: 96px;
+}
+
+.request .row--date .date-year,
+.request .row--date .date-md {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+}
+
+.request textarea {
+    width: 360px;
+    height: 28px;
+    resize: none;
+    font-weight: 700;
+    display: block;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+.actions {
+    max-width: 900px;
+    margin: 54px auto 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.actions form {
+    margin: 0;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 50px;
+    background: #111;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn--approved {
+    background: #696969;
+    cursor: default;
+}
+
+@media (max-width: 850px) {
+    .request {
+        padding-top: 56px;
+    }
+
+    .request .row {
+        grid-template-columns: 180px 1fr;
+        column-gap: 18px;
+        padding: 22px 24px;
+    }
+
+    .request .row:last-of-type {
+        min-height: 120px;
+        padding-top: 28px;
+    }
+
+    .request .label {
+        padding-left: 8px;
+    }
+
+    .request .field {
+        padding-left: 14px;
+    }
+
+    .request > .row:nth-of-type(1) .field input[type="text"] {
+        margin-left: 15px;
+    }
+
+    .request .row:nth-of-type(6) .field {
+        padding-left: 15px;
+    }
+
+    .request .time-range {
+        grid-template-columns: 120px 90px 110px;
+    }
+
+    .request .row .time-range input[type="text"] {
+        width: 110px;
+    }
+
+    .request .row--date .field--split {
+        grid-template-columns: 110px 110px;
+        column-gap: 70px;
+    }
+
+    .request textarea {
+        width: 280px;
+    }
+
+    .actions {
+        padding-right: 12px;
+        margin-top: 40px;
+    }
+
+    .btn {
+        width: 118px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
