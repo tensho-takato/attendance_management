@@ -33,6 +33,15 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=hello@example.com
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 5. アプリケーションキーの作成
@@ -53,7 +62,33 @@ php artisan migrate
 php artisan db:seed
 ```
 
+## ダミーユーザー
+
+シーディング実行後、以下のユーザーでログインできます。
+
+### 管理者ユーザー
+
+- メールアドレス：`admin@coachtech.com`
+- パスワード：`password123`
+- ログインURL：`http://localhost/admin/login`
+
+### 一般ユーザー
+
+- メールアドレス：`reina.n@coachtech.com`
+- パスワード：`password123`
+- ログインURL：`http://localhost/login`
+
+その他の一般ユーザーも、パスワードはすべて `password123` です。
+
+- `taro.y@coachtech.com`
+- `issei.m@coachtech.com`
+- `keikichi.y@coachtech.com`
+- `tomomi.a@coachtech.com`
+- `norio.n@coachtech.com`
+
 ## テストの実行
+
+以下のコマンドでテストを実行できます。
 
 ```bash
 php artisan config:clear
